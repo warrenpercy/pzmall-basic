@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.pz.basic.mall.domain.sys.MallBrand" alias="MallBrand"/>
+        <typeAlias type="com.pz.basic.mall.domain.sys.query.QueryMallBrand" alias="QueryMallBrand"/>
+        <typeAlias type="com.pz.basic.mall.domain.sys.MallProvince" alias="MallProvince" />
+        <typeAlias type="com.pz.basic.mall.domain.sys.MallCity" alias="MallCity"/>
+        <typeAlias type="com.pz.basic.mall.domain.sys.MallArea" alias="MallArea"/>
+        <typeAlias type="com.pz.basic.mall.domain.sys.query.QueryMallProvince" alias="QueryMallProvince"/>
+        <typeAlias type="com.pz.basic.mall.domain.sys.query.QueryMallCity" alias="QueryMallCity"/>
+        <typeAlias type="com.pz.basic.mall.domain.sys.query.QueryMallArea" alias="QueryMallArea"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.property.MallPropertyGroup" alias="MallPropertyGroup"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.property.MallProperty" alias="MallProperty"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.property.MallPropertyValue" alias="MallPropertyValue"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.property.query.QueryMallPropertyGroup" alias="QueryMallPropertyGroup"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.property.query.QueryMallProperty" alias="QueryMallProperty"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.property.query.QueryMallPropertyValue" alias="QueryMallPropertyValue"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.category.MallCategory" alias="MallCategory"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.category.query.QueryMallCategory" alias="QueryMallCategory"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.category.MallCategoryProperty" alias="MallCategoryProperty"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.category.query.QueryMallCategoryProperty" alias="QueryMallCategoryProperty"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.category.MallCategoryPropertyValue" alias="MallCategoryPropertyValue"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.category.query.QueryMallCategoryPropertyValue" alias="QueryMallCategoryPropertyValue"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.fncategory.MallFnCategory" alias="MallFnCategory"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.fncategory.MallFnCategoryBillboard" alias="MallFnCategoryBillboard"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.fncategory.query.QueryMallFnCategory" alias="QueryMallFnCategory"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.fncategory.query.QueryMallFnCategoryBillboard" alias="QueryMallFnCategoryBillboard"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.fncategory.MallFnBgCategoryRel" alias="MallFnBgCategoryRel"/>
+        <typeAlias type="com.pz.basic.mall.domain.product.fncategory.query.QueryMallFnBgCategoryRel" alias="QueryMallFnBgCategoryRel"/>
+        <typeAlias type="com.pz.basic.mall.domain.freight.MallLogistics" alias="MallLogistics"/>
+        <typeAlias type="com.pz.basic.mall.domain.freight.query.QueryMallLogistics" alias="QueryMallLogistics"/>
+        <typeAlias type="com.pz.basic.mall.domain.freight.MallFreightTemplete" alias="MallFreightTemplete"/>
+        <typeAlias type="com.pz.basic.mall.domain.freight.query.QueryMallFreightTemplete" alias="QueryMallFreightTemplete"/>
+        <typeAlias type="com.pz.basic.mall.domain.freight.MallFreightTempleteArea" alias="MallFreightTempleteArea"/>
+        <typeAlias type="com.pz.basic.mall.domain.freight.query.QueryMallFreightTempleteArea" alias="QueryMallFreightTempleteArea"/>
+
+    </typeAliases>
+    <mappers>
+        <!--注册映射文件 -->
+        <mapper resource="mybatis/mapper/basedata/MallBrandMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallProvinceMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallCityMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallAreaMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallPropertyGroupMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallPropertyMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallPropertyValueMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallCategoryMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallCategoryPropertyMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallCategoryPropertyValueMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallFnCategoryMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallFnCategoryBillboardMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallFnBgCategoryRelMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallLogisticsMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallFreightTempleteMapper.xml"/>
+        <mapper resource="mybatis/mapper/basedata/MallFreightTempleteAreaMapper.xml"/>
+
+    </mappers>
+
+</configuration>

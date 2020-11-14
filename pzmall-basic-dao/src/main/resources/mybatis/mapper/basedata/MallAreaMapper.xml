@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pz.basic.mall.dao.sys.MallAreaDao">
+
+    <resultMap id="ResultMap" type="MallArea">
+        <id property="id" column="id"/>
+        <id property="areaId" column="area_id"/>
+        <id property="areaName" column="area_name"/>
+        <id property="cityId" column="city_id"/>
+        <id property="status" column="status"/>
+        <id property="createUser" column="create_user"/>
+        <id property="modifyUser" column="modify_user"/>
+        <id property="created" column="created"/>
+        <id property="modified" column="modified"/>
+    </resultMap>
+
+    <sql id="ALL_TABLE_COLOUM">
+        id,
+        area_id,
+        area_name,
+        city_id,
+        status,
+        create_user,
+        modify_user,
+        created,
+        modified
+    </sql>
+
+    <sql id="Query_Where_Clause">
+        <where>
+            1=1
+
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="areaName != null and areaName != ''">
+                and area_name = #{areaName}
+            </if>
+            <if test="status!= null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="modifyUser != null and modifyUser != ''">
+                and modify_user = #{modifyUser}
+            </if>
+            <if test="created != null and created != ''">
+                and created = #{created}
+            </if>
+            <if test="modified !=null and modified != ''">
+                and modified = #{modified}
+            </if>
+
+            <if test="areaNameLike != null and areaNameLike != ''">
+                and area_name like concat(#{areaNameLike},'%')
+            </if>
+
+        </where>
+    </sql>
+
+    <select id="selectMallAreaByQuery" resultMap="ResultMap" parameterType="QueryMallArea">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_area
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+
+    </select>
+
+    <select id="selectMallAreaByPage" resultMap="ResultMap" parameterType="QueryMallArea">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_area
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+
+        LIMIT#{startRow},#{pageSize}
+    </select>
+
+    <select id="selectMallAreaById" resultMap="ResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_area
+        where id = #{id}
+    </select>
+
+    <delete id="deleteMallAreaById" parameterType="java.lang.Integer">
+        delete from mall_area
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteMallAreaByQuery" parameterType="QueryMallArea">
+        delete from mall_area
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </delete>
+
+    <insert id="insertMallArea" parameterType="MallArea">
+        INSERT INTO
+        mall_area(id,area_id,area_name,city_id,status,create_user,modify_user,created,modified)
+        VALUES(#{id},#{areaId},#{areaName},#{cityId},#{status},#{createUser},#{modifyUser},#{created},#{modified})
+        <selectKey resultType="long" keyProperty="id">
+            SELECT@@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMallAreaModified" parameterType="MallArea">
+        insert into mall_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="areaId != null">
+                area_id
+            </if>
+            <if test="areaName != null">
+                area_name,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="modifyUser != null">
+                modify_user,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="modified != null">
+                modified,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id !=null">
+                #{id},
+            </if>
+            <if test="areaId != null">
+                #{areaId},
+            </if>
+            <if test="areaName != null">
+                #{areaName},
+            </if>
+            <if test="cityId != null">
+                #{cityId},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="createUser != null">
+                #{createUser},
+            </if>
+            <if test="modifyUser != null">
+                #{modifyUser},
+            </if>
+            <if test="created!= null">
+                now(),
+            </if>
+            <if test="modified != null">
+                now(),
+            </if>
+        </trim>
+
+        <selectKey resultType="long" keyProperty="id">
+            SELECT@@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <select id="countByQuery" parameterType="QueryMallArea" resultType="java.lang.Long">
+        select count(*) from mall_area
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </select>
+
+    <update id="updateMallAreaByIdModified" parameterType="MallArea">
+        update mall_area
+        <set>
+            <if test="areaName != null">
+                area_name = #{areaName},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+            <if test="modified != null">
+                modified=now(),
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pz.basic.mall.dao.product.fncategory.MallFnCategoryDao">
+    <resultMap id="ResultMap" type="MallFnCategory">
+        <id property="fnCategoryId" column="fn_category_id"/>
+        <id property="parentId" column="parent_id"/>
+        <id property="fnCategoryName" column="fn_category_name"/>
+        <id property="fnCategoryImage" column="fn_category_image"/>
+        <id property="levle" column="level"/>
+        <id property="seoTitle" column="seo_title"/>
+        <id property="conditions" column="conditions"/>
+        <id property="seoDescription" column="seo_description"/>
+        <id property="properties" column="properties"/>
+        <id property="brandId" column="brand_id"/>
+        <id property="notes" column="notes"/>
+        <id property="features" column="features"/>
+        <id property="sortOrder" column="sort_order"/>
+        <id property="status" column="status"/>
+        <id property="special" column="special"/>
+        <id property="createUser" column="create_user"/>
+        <id property="modifyUser" column="modify_user"/>
+        <id property="created" column="created"/>
+        <id property="modified" column="modified"/>
+    </resultMap>
+    <sql id="ALL_TABLE_COLOUM">
+        fn_category_id,
+        parent_id,
+        fn_category_name,
+        fn_category_image,
+        level,
+        seo_title,
+        conditions,
+        seo_description,
+        properties,
+        brand_id,
+        notes,
+        features,
+        sort_order,
+        status,
+        special,
+        create_user,
+        modify_user,
+        created,
+        modified
+    </sql>
+    <sql id="Query_Where_Clause">
+        <where>
+            1=1
+            <if test="fnCategoryId != null and fnCategoryId != ''">
+                and fn_category_id = #{fnCategoryId}
+            </if>
+            <if test="parentId != null and parentId != ''">
+                and parent_id = #{parentId}
+            </if>
+            <if test="fnCategoryName != null and fnCategoryName != ''">
+                and fn_category_name = #{fnCategoryName}
+            </if>
+            <if test="fnCategoryImage != null and fnCategoryImage != ''">
+                and fn_category_image = #{fnCategoryImage}
+            </if>
+            <if test="level != null and level != ''">
+                and level = #{level}
+            </if>
+            <if test="seoTitle != null and seoTitle != ''">
+                and seo_title = #{seoTitle}
+            </if>
+            <if test="conditions != null and conditions != ''">
+                and conditions = #{conditions}
+            </if>
+            <if test="seoDescription != null and seoDescription != ''">
+                and seo_description = #{seoDescription}
+            </if>
+            <if test="properties != null and properties != ''">
+                and properties = #{properties}
+            </if>
+            <if test="brandId != null and brandId != ''">
+                and brand_id = #{brandId}
+            </if>
+            <if test="notes != null and notes != ''">
+                and notes = #{notes}
+            </if>
+            <if test="features != null and features != ''">
+                and features = #{features}
+            </if>
+            <if test="sortOrder != null and sortOrder != ''">
+                and sort_order = #{sortOrder}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="special != null and special != ''">
+                and special = #{special}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="modifyUser != null and modifyUser != ''">
+                and modify_user = #{modifyUser}
+            </if>
+            <if test="created != null and created != ''">
+                and created = #{created}
+            </if>
+            <if test="modified != null and modified != ''">
+                and modified = #{modified}
+            </if>
+        </where>
+    </sql>
+    <select id="selectMallFnCategoryByQuery" resultMap="ResultMap" parameterType="QueryMallFnCategory">
+        SELECT
+        <include refid="ALL_TABLE_COLOUM"/>
+        FROM mall_fn_category
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </select>
+    <select id="selectMallFnCategoryByPage" resultMap="ResultMap" parameterType="QueryMallFnCategory">
+        SELECT
+        <include refid="ALL_TABLE_COLOUM"/>
+        FROM mall_fn_category
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+        LIMIT #{startRow}, #{pageSize}
+    </select>
+    <select id="selectMallFnCategoryById" resultMap="ResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="ALL_TABLE_COLOUM"/>
+        FROM mall_fn_category WHERE fn_category_id = #{fnCategoryId}
+    </select>
+    <delete id="deleteMallFnCategoryById" parameterType="java.lang.Integer">
+        DELETE FROM mall_fn_category WHERE fn_category_id = #{fnCategoryId}
+    </delete>
+    <delete id="deleteMallFnCategoryByQuery" parameterType="QueryMallFnCategory">
+        DELETE FROM mall_fn_category
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insertMallFnCategory" parameterType="MallFnCategory">
+        INSERT INTO mall_fn_category(
+        fn_category_id,
+        parent_id,
+        fn_category_name,
+        fn_category_image,
+        level,
+        seo_title,
+        conditions,
+        seo_description,
+        properties,
+        brand_id,
+        notes,
+        features,
+        sort_order,
+        status,
+        special,
+        create_user,
+        modify_user,
+        created,
+        modified
+        ) VALUES (
+        #{fnCategoryId},
+        #{parentId},
+        #{fnCategoryName},
+        #{fnCategoryImage},
+        #{level},
+        #{seoTitle},
+        #{conditions},
+        #{seoDescription},
+        #{properties},
+        #{brandId},
+        #{notes},
+        #{features},
+        #{sortOrder},
+        #{status},
+        #{special},
+        #{createUser},
+        #{modifyUser},
+        #{created},
+        #{modified}
+        )
+        <selectKey resultType="long" keyProperty="categoryPropertyId">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+    <insert id="insertMallFnCategoryModified" parameterType="MallFnCategory">
+        INSERT INTO mall_fn_category
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fnCategoryId != null">
+                fn_category_id,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="fnCategoryName != null">
+            fn_category_name,
+            </if>
+            <if test="fnCategoryImage != null and">
+                fn_category_image,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="seoTitle != null">
+                seo_title,
+            </if>
+            <if test="conditions != null">
+                conditions,
+            </if>
+            <if test="seoDescription != null">
+                seo_description,
+            </if>
+            <if test="properties != null">
+                properties,
+            </if>
+            <if test="brandId != null">
+                brand_id,
+            </if>
+            <if test="notes != null">
+                notes,
+            </if>
+            <if test="features != null">
+                features,
+            </if>
+            <if test="sortOrder != null">
+                sort_order,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="special != null">
+                special,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="modifyUser != null">
+                modify_user,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="modified != null">
+                modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fnCategoryId != null and fnCategoryId != ''">
+                #{fnCategoryId},
+            </if>
+            <if test="parentId != null and parentId != ''">
+                #{parentId},
+            </if>
+            <if test="fnCategoryName != null and fnCategoryName != ''">
+                a#{fnCategoryName},
+            </if>
+            <if test="fnCategoryImage != null and fnCategoryImage != ''">
+                #{fnCategoryImage},
+            </if>
+            <if test="level != null and level != ''">
+                #{level},
+            </if>
+            <if test="seoTitle != null and seoTitle != ''">
+                #{seoTitle},
+            </if>
+            <if test="conditions != null and conditions != ''">
+                #{conditions},
+            </if>
+            <if test="seoDescription != null and seoDescription != ''">
+                #{seoDescription},
+            </if>
+            <if test="properties != null and properties != ''">
+                #{properties},
+            </if>
+            <if test="brandId != null and brandId != ''">
+                #{brandId},
+            </if>
+            <if test="notes != null and notes != ''">
+                #{notes},
+            </if>
+            <if test="features != null and features != ''">
+                #{features},
+            </if>
+            <if test="sortOrder != null and sortOrder != ''">
+                #{sortOrder},
+            </if>
+            <if test="status != null and status != ''">
+                #{status},
+            </if>
+            <if test="special != null and special != ''">
+                #{special},
+            </if>
+            <if test="createUser != null and createUser != ''">
+                #{createUser},
+            </if>
+            <if test="modifyUser != null and modifyUser != ''">
+                #{modifyUser},
+            </if>
+            <if test="created != null">
+                now(),
+            </if>
+            <if test="modified != null">
+                now(),
+            </if>
+        </trim>
+        <selectKey resultType="long" keyProperty="fnCategoryId">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+    <select id="countByQuery" parameterType="QueryMallFnCategory" resultType="java.lang.Long">
+        SELECT count(*) FROM mall_fn_category
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateMallFnCategoryByIdModified" parameterType="MallFnCategory">
+        update mall_fn_category
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="fnCategoryName != null">
+                fn_category_name = #{fnCategoryName},
+            </if>
+            <if test="fnCategoryImage != null">
+                fn_category_image = #{fnCategoryImage},
+            </if>
+            <if test="level != null">
+                level = #{level},
+            </if>
+            <if test="seoTitle != null">
+                seo_title = #{seoTitle},
+            </if>
+            <if test="conditions != null">
+                conditions = #{conditions},
+            </if>
+            <if test="seoDescription != null">
+                seo_description = #{seoDescription},
+            </if>
+            <if test="properties != null">
+                properties = #{properties},
+            </if>
+            <if test="brandId != null">
+                brand_id = #{brandId},
+            </if>
+            <if test="notes != null">
+                notes = #{notes},
+            </if>
+            <if test="features != null">
+                features = #{features},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="special != null">
+                special = #{special},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+            <if test="modified != null">
+                modified = now(),
+            </if>
+        </set>
+        WHERE fn_category_id = #{fnCategoryId}
+    </update>
+</mapper>

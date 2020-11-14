@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+          http://www.springframework.org/schema/mvc/spring-mvc.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byName">
+
+    <bean class="com.pz.basic.mall.service.sys.impl.MallBrandServiceImpl" id="mallBrandService"/>
+    <bean id="mallProvinceService" class="com.pz.basic.mall.service.sys.impl.MallProvinceServiceImpl"/>
+    <bean id="mallCityService" class="com.pz.basic.mall.service.sys.impl.MallCityServiceImpl"/>
+    <bean id="mallAreaService" class="com.pz.basic.mall.service.sys.impl.MallAreaServiceImpl"/>
+
+    <bean id="mallPropertyGroupService" class="com.pz.basic.mall.service.product.property.impl.MallPropertyGroupServiceImpl"/>
+    <bean id="mallPropertyService" class="com.pz.basic.mall.service.product.property.impl.MallPropertyServiceImpl"/>
+    <bean id="mallPropertyValueService" class="com.pz.basic.mall.service.product.property.impl.MallPropertyValueServiceImpl"/>
+    <bean id="mallCategoryService" class="com.pz.basic.mall.service.product.category.impl.MallCategoryServiceImpl"/>
+    <bean id="mallCategoryPropertyService" class="com.pz.basic.mall.service.product.category.impl.MallCategoryPropertyServiceImpl"/>
+    <bean id="mallFnBgCategoryRelService" class="com.pz.basic.mall.service.product.fncategory.impl.MallFnBgCategoryRelServiceImpl"/>
+
+    <bean id="mallLogisticsService" class="com.pz.basic.mall.service.freight.impl.MallLogisticsServiceImpl"/>
+    <bean id="mallFreightTempleteService" class="com.pz.basic.mall.service.freight.impl.MallFreightTempleteServiceImpl"/>
+
+</beans>

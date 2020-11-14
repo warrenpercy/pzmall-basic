@@ -1,0 +1,176 @@
+
+#set($mapName ="$!{className.toUpperCase()}-MAP")
+#set($insertSql= "")
+#set($insertFields= "")
+#set($pageCommonSql= "PAGE-COMMON")
+#set($queryCommonSql= "QUERY-COMMON")
+#set($exampleCommonSql= "EXAMPLE-COMMON")
+<?xmlversion="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN""http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="$!{daoDomain}Dao">
+
+    <typeAlias alias="$!{className}" type="$!{sqlDomain}"/>
+    <typeAlias alias="Query$!{className}" type="$!{sqlQueryDomain}"/>
+    
+    <resultMap id="ResultMap" type="$!{className}">
+        #foreach($field in $fields)
+            <id property="$!{field.propertyName}"column="$!{field.fieldName}"/>
+            #set($insertSql =$insertSql + "#{" + $!{field.propertyName} + "}" +",")
+            #set($insertFields =$insertFields + $!{field.fieldName} + ",")
+        #end
+        #if($!insertSql.endsWith(","))
+            #set($insertSql =$!insertSql.substring(0, $insertSql.lastIndexOf(",")))
+        #end
+        #if($!insertFields.endsWith(","))
+            #set($insertFields =$!insertFields.substring(0, $insertFields.lastIndexOf(",")))
+        #end
+    </resultMap>
+    
+    <sql id="ALL_TABLE_COLOUM">
+    #set($index=1)
+    #foreach($field in $fields)
+        #if($index==$fields.size())
+            $!{field.fieldName}
+        #else
+            $!{field.fieldName},
+        #end
+        #set($index =$index+1)
+    #end
+    </sql>
+    
+    <sql id="Query_Where_Clause" >
+    <where >
+        1=1
+        #foreach($field in $fields)
+            <if test="$!{field.propertyName} != null and $!{field.propertyName} !=''">
+            and $!field.fieldName = #{$!{field.propertyName}}
+            </if>
+        #end
+    </where>
+    </sql>
+    
+    <select id="select$!{className}ByQuery"resultMap="ResultMap" parameterType="Query$!{className}">
+        select
+        <include refid="ALL_TABLE_COLOUM" />
+        from $!{tableName}
+        <if test="page != null" >
+            <include refid="Query_Where_Clause" />
+        </if>
+    
+    </select>
+    
+    
+    <select id="select$!{className}ByPage" resultMap="ResultMap"parameterType="Query$!{className}" >
+    select
+    <include refid="ALL_TABLE_COLOUM" />
+    from $!{tableName}
+    <if test="page != null">
+        <include refid="Query_Where_Clause" />
+    </if>
+    
+    LIMIT #{startRow},#{pageSize}
+    </select>
+    
+    
+    <select id="select$!{className}ById" resultMap="ResultMap"parameterType="$!pkSimpleType" >
+    select
+    <include refid="ALL_TABLE_COLOUM" />
+    from $!{tableName}
+    where $!pkFiled.fieldName =#{$!pkFiled.propertyName}
+    </select>
+    
+    
+    <delete id="delete$!{className}ById" parameterType="$!pkSimpleType">
+    delete from $!{tableName}
+    where $!pkFiled.fieldName =#{$!pkFiled.propertyName}
+    </delete>
+    
+    
+    <delete id="delete$!{className}ByQuery" parameterType="Query$!{className}" >
+    delete from $!{tableName}
+    <if test="page != null" >
+        <include refid="Query_Where_Clause" />
+    </if>
+    </delete>
+    
+    
+    <insert id="insert$!{className}"parameterType="$!{className}" >
+        INSERT INTO
+        $!{tableName}($!insertFields)
+        VALUES($!insertSql)
+        <selectKey resultType="$!pkSimpleType"keyProperty="$!pkFiled.propertyName">
+        SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+    
+    
+    <insertid="insert$!{className}Modified"parameterType="$!{className}" >
+    insert into $!{tableName}
+    <trim prefix="("suffix=")" suffixOverrides="," >
+        #foreach($field in $fields)
+            #if($!field.propertyName=='created'||$!field.propertyName=='modified')
+                <iftest="$!field.propertyName == null" >
+                $!{field.fieldName},
+                </if>
+            #else
+                <iftest="$!field.propertyName != null" >
+                $!{field.fieldName},
+                </if>
+            #end
+        #end
+    </trim>
+    
+    <trim prefix="values ("suffix=")" suffixOverrides="," >
+        #foreach($field in $fields)
+            #if($!field.propertyName=='created'||$!field.propertyName=='modified')
+                <iftest="$!field.propertyName == null" >
+                now(),
+                </if>
+            #else
+                <iftest="$!field.propertyName != null" >
+                #{$!{field.propertyName}},
+                </if>
+            #end
+    
+        #end
+    </trim>
+    
+    <selectKey resultType="$!pkSimpleType"keyProperty="$!pkFiled.propertyName">
+    SELECT @@IDENTITY AS ID
+    </selectKey>
+    </insert>
+    
+    
+    <select id="countByQuery"parameterType="Query$!{className}" resultType="java.lang.Long" >
+        select count(*) from $!{tableName}
+        <if test="page != null" >
+            <include refid="Query_Where_Clause" />
+        </if>
+    </select>
+    
+    
+    
+    <update id="update$!{className}ByIdModified"parameterType="$!{className}" >
+        update $!{tableName}
+        <set >
+            #foreach($field in $fields)
+                #if($!field.fieldName!=$!pkFiled.fieldName)
+                    #if($!field.propertyName=='modified')
+                        <if test="$!field.propertyName!= null" >
+                            $!field.fieldName=now(),
+                        </if>
+                    #else
+                        <iftest="$!field.propertyName != null" >
+                        $!field.fieldName =  #{$!{field.propertyName}},
+                        </if>
+                    #end
+    
+                #end
+            #end
+        </set>
+        where $!pkFiled.fieldName =#{$!pkFiled.propertyName}
+    </update>
+
+
+</mapper>

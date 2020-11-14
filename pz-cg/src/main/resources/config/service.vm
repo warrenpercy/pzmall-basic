@@ -1,0 +1,88 @@
+
+/**
+* Copyright(c) 2004-$!year pangzi
+* $!{package}.$!{className}Service.java
+*/
+package $!{package};
+#foreach($import in $imports)
+import $import;
+#end
+import java.util.Map;
+import java.io.Serializable;
+
+
+
+/**
+* service层，组装外部接口 和 本地业务，为本业务 或者其他业务提供服务，统一返回Result
+* 通过Result.isSuccess判断调用是否成功
+* 此类中新增业务接口设计（接口命令，入参数据，返回值）要 能尽量完整的表达业务 含义
+* @author $!author
+* @date $!dateTime
+*/
+public interface $!{className}Service {
+
+    /**
+    * 新增 $!instName
+    * 返回result，通过result.isSuccess()判断服务调用是否成功
+    * 通过result.getModel()得到新增$!instName
+    * @param $!instName
+    * @return
+    */
+    public Result<$!className> add$!{className}($!className $!instName) ;
+
+    /**
+    * 按照主键id更新$!instName，请重新new$!className 的更新对象，设置要更新的字段
+    * 返回result，通过result.isSuccess()判断更新是否成功
+    * @param id
+    * @param $!instName
+    * @return
+    */
+    public Result update$!{className}ById($!className $!instName);
+
+    /**
+    * 按照主键id 删除 记录
+    * 返回result，通过result.isSuccess()判断删除是否成功
+    * @param id
+    * @return
+    */
+    public Result delete$!{className}ById($!pkSimpleType $!{pkid});
+
+    /**
+    * 查询列表，此接口不包含分页查询
+    * 返回result，通过result.isSuccess()判断服务调用是否成功
+    * 通过result.getModel()得到列表信息
+    * @param $!queryInstName
+    * @return
+    */
+    publicResult<List<$!className>> get$!{className}sByQuery(Query$!className$!queryInstName);
+
+    /**
+    * 通过主键id查询$!className
+    * 返回result，通过result.isSuccess()判断服务调用是否成功
+    * 通过result.getModel()得到查询的单条$!instName信息
+    * @param id
+    * @return
+    */
+    public Result<$!className> get$!{className}ById($!pkSimpleType $!{pkid});
+
+    /**
+    * 查询列表，包含分页查询
+    * 查询分页信息，请设置
+    * Query$!{className}.setIndex(设置当前页数)
+    * Query$!{className}.setPageSize(设置当前页面数据行数)
+    * 返回result，通过result.isSuccess()判断服务调用是否成功
+    * 通过result.getTotal()返回结果总数
+    * 通过result.getModel()得到查询的单页列表信息
+    * @param $!queryInstName
+    * @return
+    */
+    public Result<List<$!className>> get$!{className}sByPage(Query$!className$!queryInstName);
+
+    /**
+    * 查询总数
+    * @param $!queryInstName
+    * @return
+    */
+    public Result<$!pkType> count(Query$!className $!queryInstName);
+
+}

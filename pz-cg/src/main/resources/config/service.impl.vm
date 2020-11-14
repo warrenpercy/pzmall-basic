@@ -1,0 +1,125 @@
+#set($managerName= "$!{instName}Manager")
+#set($daoName ="$!{instName}Dao")
+
+/**
+* Copyright(c) 2004-$!year pangzi
+* $!{package}.$!{className}Service.java
+*/
+package $!{package};
+#foreach($import in $imports)
+import $import;
+#end
+import java.util.ArrayList;
+#if($!{Resource})
+import javax.annotation.Resource;
+import org.springframework.stereotype.Component;
+#end
+import java.util.Map;
+import java.io.Serializable;
+
+
+
+/**
+*
+* @author $!author
+* @date $!dateTime
+*/
+#if($!{Resource})
+    $!Component
+#end
+public class $!{className}ServiceImpl implements $!{className}Service {
+
+    $!{Resource}
+    private $!{className}Dao $!{daoName};
+
+    #if(!$!{Resource})
+    public void set$!{className}Dao($!{className}Dao $!{daoName}) {
+        this.$!{daoName} = $!{daoName};
+    #end
+    public Result<$!className> add$!{className}($!className $!instName) {
+        Result<$!className>result = new Result<$!className>();
+        try {
+            $!{daoName}.insert$!{className}Modified($!instName);
+            result.addDefaultModel($!instName);
+        } catch(Exception e) {
+            result.setSuccess(false);
+        }
+            return result;
+    }
+
+    public Result update$!{className}ById($!className $!instName) {
+        Result result = new Result();
+        try {
+            int count=$!{daoName}.update$!{className}ByIdModified($!instName);
+            if(count>0){
+                result.setSuccess(true);
+            }
+        } catch(Exception e) {
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    public Result delete$!{className}ById($!pkSimpleType $!{pkid}) {
+        Result result = new Result();
+        try {
+            int count=$!{daoName}.delete$!{className}ById($!{pkid});
+            if(count>0){
+                result.setSuccess(true);
+            }
+        } catch(Exception e) {
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    public Result<List<$!className>> get$!{className}sByQuery(Query$!className$!queryInstName) {
+        Result<List<$!className>> result = new Result<List<$!className>>();
+        try {
+            result.addDefaultModel($!{daoName}.select$!{className}ByQuery($!queryInstName));
+        } catch(Exception e) {
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    public Result<$!className> get$!{className}ById($!pkSimpleType $!{pkid}) {
+        Result<$!className> result = new Result<$!className>();
+        try {
+            result.addDefaultModel($!{daoName}.select$!{className}ById($!{pkid}));
+        } catch(Exception e) {
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+
+    public Result<List<$!className>> get$!{className}sByPage(Query$!className$!queryInstName) {
+
+        Result<List<$!className>> result = new Result<List<$!className>>();
+        $!pkSimpleType totalItem =$!{daoName}.countByQuery($!queryInstName);
+        $!{queryInstName}.setTotalItem(totalItem);
+        $!{queryInstName}.repaginate();
+        if (totalItem > 0) {
+            result.addDefaultModel($!{daoName}.select$!{className}ByPage($!queryInstName));
+        } else {
+            result.addDefaultModel(newArrayList<$!className>());
+        }
+        result.setTotalItem(totalItem);
+        result.setPageSize($!{queryInstName}.getPageSize());
+        result.setPage($!{queryInstName}.getPage());
+
+        return result;
+    }
+
+    public Result<$!pkType> count(Query$!className $!queryInstName) {
+        Result<$!pkType> result= new Result<$!pkType>();
+        try {
+            result.addDefaultModel($!{daoName}.countByQuery($!queryInstName));
+        } catch(Exception e) {
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+}

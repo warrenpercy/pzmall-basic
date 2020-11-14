@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pz.basic.mall.dao.product.property.MallPropertyValueDao">
+
+    <resultMap id="ResultMap" type="MallPropertyValue">
+        <id property="propertyValueId" column="property_value_id"/>
+        <id property="childProperytId" column="child_property_id"/>
+        <id property="propertyId" column="property_id"/>
+        <id property="valueData" column="value_data"/>
+        <id property="groupId" column="group_id"/>
+        <id property="features" column="features"/>
+        <id property="sortOrder" column="sort_order"/>
+        <id property="status" column="status"/>
+        <id property="createUser" column="create_user"/>
+        <id property="modifyUser" column="modify_user"/>
+        <id property="created" column="created"/>
+        <id property="modified" column="modified"/>
+    </resultMap>
+
+    <sql id="ALL_TABLE_COLOUM">
+        property_value_id,
+        child_property_id,
+        property_id,
+        value_data,
+        group_id,
+        features,
+        sort_order,
+        status,
+        create_user,
+        modify_user,
+        created,
+        modified
+    </sql>
+
+    <sql id="Query_Where_Clause">
+        <where>
+            1=1
+            <if test="propertyValueId != null and propertyValueId != ''">
+                and property_value_id = #{propertyValueId}
+            </if>
+            <if test="childPropertyId != null and childPropertyId != ''">
+                and child_property_id = #{childPropertyId}
+            </if>
+            <if test="propertyId != null and propertyId !=''">
+                and property_id = #{propertyId}
+            </if>
+            <if test="valueData != null and valueData != ''">
+                and value_data = #[valueData]
+            </if>
+            <if test="groupId != null and groupId != ''">
+                and group_id = #{groupId}
+            </if>
+            <if test="features != null and features != ''">
+                and features = #{features}
+            </if>
+            <if test="sortOrder != null and sortOrder !=''">
+                and sort_order = #{sortOrder}
+            </if>
+            <if test="status!= null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="modifyUser != null and modifyUser != ''">
+                and modify_user = #{modifyUser}
+            </if>
+            <if test="created != null and created != ''">
+                and created = #{created}
+            </if>
+            <if test="modified !=null and modified != ''">
+                and modified = #{modified}
+            </if>
+
+            <if test="valueDataLike != null and valueDataLike != ''">
+                and value_data like concat(#{valueDataLike},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectMallPropertyValueByQuery" resultMap="ResultMap" parameterType="QueryMallPropertyValue">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_property_value
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+
+    </select>
+
+    <select id="selectMallPropertyValueByPage" resultMap="ResultMap" parameterType="QueryMallPropertyValue">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_property_value
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+        LIMIT#{startRow},#{pageSize}
+    </select>
+
+    <select id="selectMallPropertyValueById" resultMap="ResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_property_value
+        where property_value_id = #{propertyValueId}
+    </select>
+
+    <delete id="deleteMallPropertyValueById" parameterType="java.lang.Integer">
+        delete from mall_property_value
+        where property_value_id = #{propertyValueId}
+    </delete>
+
+    <delete id="deleteMallPropertyValueByQuery" parameterType="QueryMallPropertyValue">
+        delete from mall_property_value
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </delete>
+
+    <insert id="insertMallPropertyValue" parameterType="MallPropertyValue">
+        INSERT INTO
+        mall_property_value(property_value_id,child_property_id,property_id,value_data,group_id,features,sort_order,status,create_user,modify_user,created,modified)
+        VALUES(#{propertyValueId},#{childPropertyId},#{propertyId},#{valueData},#{groupId},#{features},#{sortOrder},#{status},#{createUser},#{modifyUser},#{created},#{modified})
+        <selectKey resultType="long" keyProperty="propertyValueId">
+            SELECT@@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMallPropertyValueModified" parameterType="MallPropertyValue">
+        insert into mall_property_value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="propertyValueId != null">
+                property_value_id,
+            </if>
+            <if test="childPropertyId != null">
+                child_property_id,
+            </if>
+            <if test="propertyId != null">
+                property_id,
+            </if>
+            <if test="valueData != null">
+                value_data,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="features != null">
+                features,
+            </if>
+            <if test="sortOrder != null">
+                sort_order,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="modifyUser != null">
+                modify_user,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="modified != null">
+                modified,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="propertyValueId !=null">
+                #{propertyValueId},
+            </if>
+            <if test="childPropertyId != null">
+                #{child_property_id},
+            </if>
+            <if test="propertyId != null">
+                #{propertyId},
+            </if>
+            <if test="valueData != null">
+                #{valueData},
+            </if>
+            <if test="groupId != null">
+                #{groupId},
+            </if>
+            <if test="features != null">
+                #{features},
+            </if>
+            <if test="sortOrder != null">
+                #{sortOrder},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="createUser != null">
+                #{createUser},
+            </if>
+            <if test="modifyUser != null">
+                #{modifyUser},
+            </if>
+            <if test="created!= null">
+                now(),
+            </if>
+            <if test="modified != null">
+                now(),
+            </if>
+        </trim>
+        <selectKey resultType="long" keyProperty="propertyValueId">
+            SELECT@@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <select id="countByQuery" parameterType="QueryMallPropertyValue" resultType="java.lang.Long">
+        select count(*) from mall_property_value
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </select>
+
+    <update id="updateMallPropertyValueByIdModified" parameterType="MallPropertyValue">
+        update mall_property_value
+        <set>
+            <if test="groupName != null">
+                child_property_id = #{childPropertyId},
+            </if>
+            <if test="propertyId != null">
+                property_id = #{propertyId},
+            </if>
+            <if test="valueData != null">
+                value_data = #{valueData},
+            </if>
+            <if test="groupId != null">
+                group_id= #{groupId},
+            </if>
+            <if test="features != null">
+                features = #{features},
+            </if>
+            <if test="sortOrder != null">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+            <if test="modified != null">
+                modified = now(),
+            </if>
+        </set>
+        where property_value_id = #{propertyValueId}
+    </update>
+</mapper>

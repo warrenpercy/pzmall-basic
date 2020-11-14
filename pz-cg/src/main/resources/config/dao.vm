@@ -1,0 +1,88 @@
+
+/**
+* Copyright(c) 2004-$!year pangzi
+* $!{package}.$!{className}Dao.java
+*/
+package $!{package};
+#foreach($import in $imports)
+import $import;
+#end
+import java.util.Map;
+import java.io.Serializable;
+
+
+
+/**
+*
+* @author $!author
+* @date $!dateTime
+*/
+public interface $!{className}Dao {
+
+    /**
+    * 根据条件查询总数
+    * @param Query$!{className} query
+    * @return
+    */
+    $!pkSimpleType countByQuery(Query$!{className} query);
+
+    /**
+    * 根据条件删除记录
+    * @param $!{className}Query query
+    * @return
+    */
+    int delete$!{className}ByQuery(Query$!{className} query);
+
+    /**
+    * 根据ID删除记录
+    * @param id
+    * @return
+    */
+    int delete$!{className}ById($!pkSimpleType$!{pkid});
+
+    /**
+    * 新增记录
+    * @param $!{className} record
+    * @return
+    */
+    $!pkSimpleType insert$!{className}($!{className} record);
+
+    /**
+    * 新增记录 注意：有值的记录才新增
+    * @param $!{className} record
+    * @return
+    */
+    $!pkSimpleType insert$!{className}Modified($!{className} record);
+
+    /**
+    * 根据查询条件返回列表
+    * @param Query$!{className} query
+    * @return
+    */
+    List<$!{className}> select$!{className}ByQuery(Query$!{className} query);
+
+    /**
+    * 根据查询条件返回列表
+    * @param Query$!{className} query
+    * @return
+    */
+    List<$!{className}> select$!{className}ByPage(Query$!{className} query);
+
+    /**
+    * 根据ID查询对象
+    * @param Long id
+    * @return
+    */
+    $!{className} select$!{className}ById($!pkSimpleType $!{pkid});
+
+
+    /**
+    * 根据id修改记录 注意：有值的字段才更新
+    * @param $!{className} record
+    * @return
+    */
+    int update$!{className}ByIdModified($!{className}record);
+
+
+
+}

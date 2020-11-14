@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pz.basic.mall.dao.freight.MallFreightTempleteDao">
+
+    <resultMap id="ResultMap" type="MallFreightTemplete">
+        <id property="templeteId" column="templete_id"/>
+        <id property="templeteName" column="templete_name"/>
+        <id property="logisticsCode" column="logistics_code"/>
+        <id property="logisticsName" column="logistics_name"/>
+        <id property="templeteType" column="templete_type"/>
+        <id property="serviceType" column="service_type"/>
+        <id property="freightType" column="freight_type"/>
+        <id property="chargeType" column="charge_type"/>
+        <id property="numMin" column="num_min"/>
+        <id property="numMax" column="num_max"/>
+        <id property="fristNumPrice" column="frist_num_price"/>
+        <id property="nextNumPrice" column="next_num_price"/>
+        <id property="weightMin" column="weight_min"/>
+        <id property="weightMax" column="weight_max"/>
+        <id property="fristWeightPrice" column="frist_weight_price"/>
+        <id property="nextWeightPrice" column="next_weight_price"/>
+        <id property="volumeMin" column="volume_min"/>
+        <id property="volumeMax" column="volume_max"/>
+        <id property="fristVolumePrice" column="frist_volume_price"/>
+        <id property="nextVolumePrice" column="next_volume_price"/>
+        <id property="status" column="status"/>
+        <id property="createUser" column="create_user"/>
+        <id property="modifyUser" column="modify_user"/>
+        <id property="created" column="created"/>
+        <id property="modified" column="modified"/>
+    </resultMap>
+
+    <sql id="ALL_TABLE_COLOUM">
+        templete_id,
+        templete_name,
+        logistics_code,
+        logistics_name,
+        templete_type,
+        service_type,
+        freight_type,
+        charge_type,
+        num_min,
+        num_max,
+        frist_num_price,
+        next_num_price,
+        weight_min,
+        weight_max,
+        frist_weight_price,
+        next_weight_price,
+        volume_min,
+        volume_max,
+        frist_volume_price,
+        next_volume_price,
+        status,
+        create_user,
+        modify_user,
+        created,
+        modified
+    </sql>
+
+    <sql id="Query_Where_Clause" >
+        <where >
+            status>-1
+            <if test="templeteId != null and templeteId != ''">
+                and  templete_id =  #{templeteId}
+            </if>
+            <if test="templeteName != null and templeteName != ''">
+                and  templete_name =  #{templeteName}
+            </if>
+            <if test="logisticsCode != null and logisticsCode != ''">
+                and  logistics_code =  #{logisticsCode}
+            </if>
+            <if test="logisticsName != null and logisticsName != ''">
+                and  logistics_name =  #{logisticsName}
+            </if>
+            <if test="templeteType != null and templeteType != ''">
+                and  templete_type =  #{templeteType}
+            </if>
+            <if test="serviceType != null and serviceType != ''">
+                and  service_type =  #{serviceType}
+            </if>
+            <if test="freightType != null and freightType != ''">
+                and  freight_type =  #{freightType}
+            </if>
+            <if test="chargeType != null and chargeType != ''">
+                and  charge_type =  #{chargeType}
+            </if>
+            <if test="numMin != null and numMin != ''">
+                and  num_min =  #{numMin}
+            </if>
+            <if test="numMax != null and numMax != ''">
+                and  num_max =  #{numMax}
+            </if>
+            <if test="fristNumPrice != null and fristNumPrice != ''">
+                and  frist_num_price =  #{fristNumPrice}
+            </if>
+            <if test="nextNumPrice != null and nextNumPrice != ''">
+                and  next_num_price =  #{nextNumPrice}
+            </if>
+            <if test="weightMin != null and weightMin != ''">
+                and  weight_min =  #{weightMin}
+            </if>
+            <if test="weightMax != null and weightMax != ''">
+                and  weight_max =  #{weightMax}
+            </if>
+            <if test="fristWeightPrice != null and fristWeightPrice != ''">
+                and  frist_weight_price =  #{fristWeightPrice}
+            </if>
+            <if test="nextWeightPrice != null and nextWeightPrice != ''">
+                and  next_weight_price =  #{nextWeightPrice}
+            </if>
+            <if test="volumeMin != null and volumeMin != ''">
+                and  volume_min =  #{volumeMin}
+            </if>
+            <if test="volumeMax != null and volumeMax != ''">
+                and  volume_max =  #{volumeMax}
+            </if>
+            <if test="fristVolumePrice != null and fristVolumePrice != ''">
+                and  frist_volume_price =  #{fristVolumePrice}
+            </if>
+            <if test="nextVolumePrice != null and nextVolumePrice != ''">
+                and  next_volume_price =  #{nextVolumePrice}
+            </if>
+            <if test="status != null and status != ''">
+                and  status =  #{status}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and  create_user =  #{createUser}
+            </if>
+            <if test="modifyUser != null and modifyUser != ''">
+                and  modify_user =  #{modifyUser}
+            </if>
+            <if test="created != null and created != ''">
+                and  created =  #{created}
+            </if>
+            <if test="modified != null and modified != ''">
+                and  modified =  #{modified}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectMallFreightTempleteByQuery" resultMap="ResultMap" parameterType="QueryMallFreightTemplete" >
+        select
+        <include refid="ALL_TABLE_COLOUM" />
+        from mall_freight_templete
+        <if test="page != null" >
+            <include refid="Query_Where_Clause" />
+        </if>
+    </select>
+
+    <select id="selectMallFreightTempleteByPage" resultMap="ResultMap" parameterType="QueryMallFreightTemplete" >
+        select
+        <include refid="ALL_TABLE_COLOUM" />
+        from mall_freight_templete
+        <if test="page != null" >
+            <include refid="Query_Where_Clause" />
+        </if>
+        LIMIT #{startRow},#{pageSize}
+    </select>
+
+    <select id="selectMallFreightTempleteById" resultMap="ResultMap" parameterType="long" >
+        select
+        <include refid="ALL_TABLE_COLOUM" />
+        from mall_freight_templete
+        where templete_id = #{templeteId}
+    </select>
+
+    <delete id="deleteMallFreightTempleteById" parameterType="long" >
+        delete from mall_freight_templete
+        where templete_id = #{templeteId}
+    </delete>
+
+    <delete id="deleteMallFreightTempleteByQuery" parameterType="QueryMallFreightTemplete" >
+        delete from mall_freight_templete
+        <if test="page != null" >
+            <include refid="Query_Where_Clause" />
+        </if>
+    </delete>
+
+
+    <insert id="insertMallFreightTemplete" parameterType="MallFreightTemplete" >
+        INSERT INTO
+        mall_freight_templete(templete_id,templete_name,logistics_code,logistics_name,templete_type,service_type,freight_type,charge_type,num_min,num_max,frist_num_price,next_num_price,weight_min,weight_max,frist_weight_price,next_weight_price,volume_min,volume_max,frist_volume_price,next_volume_price,status,create_user,modify_user,created,modified)
+        VALUES(#{templeteId},#{templeteName},#{logisticsCode},#{logisticsName},#{templeteType},#{serviceType},#{freightType},#{chargeType},#{numMin},#{numMax},#{fristNumPrice},#{nextNumPrice},#{weightMin},#{weightMax},#{fristWeightPrice},#{nextWeightPrice},#{volumeMin},#{volumeMax},#{fristVolumePrice},#{nextVolumePrice},#{status},#{createUser},#{modifyUser},#{created},#{modified})
+        <selectKey resultType="long" keyProperty="templeteId">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMallFreightTempleteModified" parameterType="MallFreightTemplete" >
+        insert into mall_freight_templete
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="templeteId != null" >
+                templete_id,
+            </if>
+            <if test="templeteName != null" >
+                templete_name,
+            </if>
+            <if test="logisticsCode != null" >
+                logistics_code,
+            </if>
+            <if test="logisticsName != null" >
+                logistics_name,
+            </if>
+            <if test="templeteType != null" >
+                templete_type,
+            </if>
+            <if test="serviceType != null" >
+                service_type,
+            </if>
+            <if test="freightType != null" >
+                freight_type,
+            </if>
+            <if test="chargeType != null" >
+                charge_type,
+            </if>
+            <if test="numMin != null" >
+                num_min,
+            </if>
+            <if test="numMax != null" >
+                num_max,
+            </if>
+            <if test="fristNumPrice != null" >
+                frist_num_price,
+            </if>
+            <if test="nextNumPrice != null" >
+                next_num_price,
+            </if>
+            <if test="weightMin != null" >
+                weight_min,
+            </if>
+            <if test="weightMax != null" >
+                weight_max,
+            </if>
+            <if test="fristWeightPrice != null" >
+                frist_weight_price,
+            </if>
+            <if test="nextWeightPrice != null" >
+                next_weight_price,
+            </if>
+            <if test="volumeMin != null" >
+                volume_min,
+            </if>
+            <if test="volumeMax != null" >
+                volume_max,
+            </if>
+            <if test="fristVolumePrice != null" >
+                frist_volume_price,
+            </if>
+            <if test="nextVolumePrice != null" >
+                next_volume_price,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+            <if test="createUser != null" >
+                create_user,
+            </if>
+            <if test="modifyUser != null" >
+                modify_user,
+            </if>
+            <if test="created == null" >
+                created,
+            </if>
+            <if test="modified == null" >
+                modified,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="templeteId != null" >
+                #{templeteId},
+            </if>
+
+            <if test="templeteName != null" >
+                #{templeteName},
+            </if>
+
+            <if test="logisticsCode != null" >
+                #{logisticsCode},
+            </if>
+
+            <if test="logisticsName != null" >
+                #{logisticsName},
+            </if>
+
+            <if test="templeteType != null" >
+                #{templeteType},
+            </if>
+
+            <if test="serviceType != null" >
+                #{serviceType},
+            </if>
+
+            <if test="freightType != null" >
+                #{freightType},
+            </if>
+
+            <if test="chargeType != null" >
+                #{chargeType},
+            </if>
+
+            <if test="numMin != null" >
+                #{numMin},
+            </if>
+
+            <if test="numMax != null" >
+                #{numMax},
+            </if>
+
+            <if test="fristNumPrice != null" >
+                #{fristNumPrice},
+            </if>
+
+            <if test="nextNumPrice != null" >
+                #{nextNumPrice},
+            </if>
+
+            <if test="weightMin != null" >
+                #{weightMin},
+            </if>
+
+            <if test="weightMax != null" >
+                #{weightMax},
+            </if>
+
+            <if test="fristWeightPrice != null" >
+                #{fristWeightPrice},
+            </if>
+
+            <if test="nextWeightPrice != null" >
+                #{nextWeightPrice},
+            </if>
+
+            <if test="volumeMin != null" >
+                #{volumeMin},
+            </if>
+
+            <if test="volumeMax != null" >
+                #{volumeMax},
+            </if>
+
+            <if test="fristVolumePrice != null" >
+                #{fristVolumePrice},
+            </if>
+
+            <if test="nextVolumePrice != null" >
+                #{nextVolumePrice},
+            </if>
+
+            <if test="status != null" >
+                #{status},
+            </if>
+
+            <if test="createUser != null" >
+                #{createUser},
+            </if>
+
+            <if test="modifyUser != null" >
+                #{modifyUser},
+            </if>
+
+            <if test="created == null" >
+                now(),
+            </if>
+
+            <if test="modified == null" >
+                now(),
+            </if>
+
+        </trim>
+
+        <selectKey resultType="long" keyProperty="templeteId">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <select id="countByQuery" parameterType="QueryMallFreightTemplete"  resultType="java.lang.Long" >
+        select count(*) from mall_freight_templete
+        <if test="page != null" >
+            <include refid="Query_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateMallFreightTempleteByIdModified" parameterType="MallFreightTemplete" >
+        update mall_freight_templete
+        <set >
+            <if test="templeteName != null" >
+                templete_name =  #{templeteName},
+            </if>
+
+            <if test="logisticsCode != null" >
+                logistics_code =  #{logisticsCode},
+            </if>
+
+            <if test="logisticsName != null" >
+                logistics_name =  #{logisticsName},
+            </if>
+
+            <if test="templeteType != null" >
+                templete_type =  #{templeteType},
+            </if>
+
+            <if test="serviceType != null" >
+                service_type =  #{serviceType},
+            </if>
+
+            <if test="freightType != null" >
+                freight_type =  #{freightType},
+            </if>
+
+            <if test="chargeType != null" >
+                charge_type =  #{chargeType},
+            </if>
+
+            <if test="numMin != null" >
+                num_min =  #{numMin},
+            </if>
+
+            <if test="numMax != null" >
+                num_max =  #{numMax},
+            </if>
+
+            <if test="fristNumPrice != null" >
+                frist_num_price =  #{fristNumPrice},
+            </if>
+
+            <if test="nextNumPrice != null" >
+                next_num_price =  #{nextNumPrice},
+            </if>
+
+            <if test="weightMin != null" >
+                weight_min =  #{weightMin},
+            </if>
+
+            <if test="weightMax != null" >
+                weight_max =  #{weightMax},
+            </if>
+
+            <if test="fristWeightPrice != null" >
+                frist_weight_price =  #{fristWeightPrice},
+            </if>
+
+            <if test="nextWeightPrice != null" >
+                next_weight_price =  #{nextWeightPrice},
+            </if>
+
+            <if test="volumeMin != null" >
+                volume_min =  #{volumeMin},
+            </if>
+
+            <if test="volumeMax != null" >
+                volume_max =  #{volumeMax},
+            </if>
+
+            <if test="fristVolumePrice != null" >
+                frist_volume_price =  #{fristVolumePrice},
+            </if>
+
+            <if test="nextVolumePrice != null" >
+                next_volume_price =  #{nextVolumePrice},
+            </if>
+
+            <if test="status != null" >
+                status =  #{status},
+            </if>
+
+            <if test="createUser != null" >
+                create_user =  #{createUser},
+            </if>
+
+            <if test="modifyUser != null" >
+                modify_user =  #{modifyUser},
+            </if>
+
+            <if test="created != null" >
+                created =  #{created},
+            </if>
+
+            <if test="modified != null" >
+                modified=now(),
+            </if>
+        </set>
+        where templete_id = #{templeteId}
+    </update>
+
+</mapper>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.pz.basic.mall.dao.product.fncategory.MallFnBgCategoryRelDao">
+    <resultMap id="ResultMap" type="MallFnBgCategoryRel">
+        <id property="id" column="id"/>
+        <id property="fnCategoryId" column="fn_category_id"/>
+        <id property="categoryId" column="category_id"/>
+        <id property="mainCategory" column="main_category"/>
+        <id property="active" column="features"/>
+        <id property="status" column="status"/>
+        <id property="createUser" column="create_user"/>
+        <id property="modifyUser" column="modify_user"/>
+        <id property="created" column="created"/>
+        <id property="modified" column="modified"/>
+    </resultMap>
+
+    <sql id="ALL_TABLE_COLOUM">
+        id,
+        fn_category_id,
+        category_id,
+        main_category,
+        features,
+        status,
+        create_user,
+        modify_user,
+        created,
+        modified
+    </sql>
+
+    <sql id="Query_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="fnCategoryId != null and fnCategoryId != ''">
+                and fn_category_id = #{fnCategoryId}
+            </if>
+            <if test="categoryId != null and categoryId != ''">
+                and category_id = #{categoryId}
+            </if>
+            <if test="mainCategory != null and mainCategory != ''">
+                and main_category = #{mainCategory}
+            </if>
+            <if test="features != null and features != ''">
+                and features = #{features}
+            </if>
+            <if test="status!= null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="modifyUser != null and modifyUser != ''">
+                and modify_user = #{modifyUser}
+            </if>
+            <if test="created != null and created != ''">
+                and created = #{created}
+            </if>
+            <if test="modified !=null and modified != ''">
+                and modified = #{modified}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectMallFnBgCategoryRelByQuery" resultMap="ResultMap" parameterType="QueryMallFnBgCategoryRel">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_fn_bg_category_rel
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+
+    </select>
+
+    <select id="selectMallFnBgCategoryRelByPage" resultMap="ResultMap" parameterType="QueryMallFnBgCategoryRel">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_fn_bg_category_rel
+        <if test="page != null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+        LIMIT #{startRow}, #{pageSize}
+    </select>
+
+    <select id="selectMallFnBgCategoryRelById" resultMap="ResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="ALL_TABLE_COLOUM"/>
+        from mall_fn_bg_category_rel
+        where id = #{id}
+    </select>
+
+    <delete id="deleteMallFnBgCategoryRelById" parameterType="java.lang.Integer">
+        delete from mall_fn_bg_category_rel
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteMallFnBgCategoryRelByQuery" parameterType="QueryMallFnBgCategoryRel">
+        delete from mall_fn_bg_category_rel
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </delete>
+
+    <insert id="insertMallFnBgCategoryRel" parameterType="MallFnBgCategoryRel">
+        INSERT INTO
+        mall_fn_bg_category_rel(id,fn_category_id,category_id,main_category,features,status,create_user,modify_user,created,modified)
+        VALUES(#{id},#{fnCategoryId},#{categoryId},#{mainCategory},#{features},#{status},#{createUser},#{modifyUser},#{created},#{modified})
+        <selectKey resultType="long" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <insert id="insertMallFnBgCategoryRelModified" parameterType="MallFnBgCategoryRel">
+        insert into mall_fn_bg_category_rel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fnCategoryId != null">
+                fn_category_id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="mainCategory != null">
+                main_category,
+            </if>
+            <if test="features != null">
+                features,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="modifyUser != null">
+                modify_user,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="modified != null">
+                modified,
+            </if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id !=null">
+                #{id},
+            </if>
+            <if test="fnCategoryId != null">
+                #{fnCategoryId},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId},
+            </if>
+            <if test="mainCategory != null">
+                #{mainCategory},
+            </if>
+            <if test="features != null">
+                #{features},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="createUser != null">
+                #{createUser},
+            </if>
+            <if test="modifyUser != null">
+                #{modifyUser},
+            </if>
+            <if test="created!= null">
+                now(),
+            </if>
+            <if test="modified != null">
+                now(),
+            </if>
+        </trim>
+        <selectKey resultType="long" keyProperty="id">
+            SELECT @@IDENTITY AS ID
+        </selectKey>
+    </insert>
+
+    <select id="countByQuery" parameterType="QueryMallFnBgCategoryRel" resultType="java.lang.Long">
+        select count(*) from mall_fn_bg_category_rel
+        <if test="page!= null">
+            <include refid="Query_Where_Clause"/>
+        </if>
+    </select>
+
+    <update id="updateMallFnBgCategoryRelByIdModified" parameterType="MallFnBgCategoryRel">
+        update mall_fn_bg_category_rel
+        <set>
+            <if test="fnCategoryId != null">
+                fn_category_id = #{fnCategoryId},
+            </if>
+            <if test="categoryId != null">
+                category_id= #{categoryId},
+            </if>
+            <if test="mainCategory != null">
+                main_category = #{mainCategory},
+            </if>
+            <if test="features != null">
+                features = #{features},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+            <if test="modifyUser != null">
+                modify_user = #{modifyUser},
+            </if>
+            <if test="created != null">
+                created = #{created},
+            </if>
+            <if test="modified != null">
+                modified = now(),
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
